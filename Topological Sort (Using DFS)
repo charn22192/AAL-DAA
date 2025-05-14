@@ -1,0 +1,74 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX 100
+
+struct Node {
+    int vertex;
+    struct Node* next;
+};
+
+struct Node* adj[MAX];  
+int visited[MAX];
+int stack[MAX];
+int top = -1;
+
+void addEdge(int src, int dest) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->vertex = dest;
+    newNode->next = adj[src];
+    adj[src] = newNode;
+}
+
+
+void dfs(int v) {
+    visited[v] = 1;
+
+    struct Node* temp = adj[v];
+    while (temp != NULL) {
+        if (!visited[temp->vertex]) {
+            dfs(temp->vertex);
+        }
+        temp = temp->next;
+    }
+
+    stack[++top] = v;  
+}
+
+int main() {
+    int vertices, edges;
+    int i, src, dest;
+
+    printf("Enter number of vertices: ");
+    scanf("%d", &vertices);
+
+    printf("Enter number of edges: ");
+    scanf("%d", &edges);
+
+    for (i = 0; i < vertices; i++) {
+        adj[i] = NULL;
+        visited[i] = 0;
+    }
+
+    printf("Enter edges (source destination):\n");
+    for (i = 0; i < edges; i++) {
+        scanf("%d %d", &src, &dest);
+        addEdge(src, dest);
+    }
+
+    
+    for (i = 0; i < vertices; i++) {
+        if (!visited[i]) {
+            dfs(i);
+        }
+    }
+
+
+    printf("Topological Sort (DFS-based):\n");
+    while (top >= 0) {
+        printf("%d ", stack[top--]);
+    }
+    printf("\n");
+
+    return 0;
+}
