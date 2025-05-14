@@ -1,0 +1,68 @@
+#include <stdio.h>
+#define MAX 100
+
+int parent[MAX];
+
+int find(int i) {
+    while (parent[i] != i)
+        i = parent[i];
+    return i;
+}
+void unionSet(int i, int j) {
+    int a = find(i);
+    int b = find(j);
+    parent[a] = b;
+}
+
+int main() {
+    int n, e; 
+    int i, j, u, v;
+    int cost = 0;
+    int edges[MAX][3];  
+
+    printf("Enter number of vertices: ");
+    scanf("%d", &n);
+
+    printf("Enter number of edges: ");
+    scanf("%d", &e);
+
+    printf("Enter edges (source destination weight):\n");
+    for (i = 0; i < e; i++) {
+        scanf("%d %d %d", &edges[i][0], &edges[i][1], &edges[i][2]);
+    }
+
+    for (i = 0; i < n; i++)
+        parent[i] = i;
+
+    for (i = 0; i < e - 1; i++) {
+        for (j = 0; j < e - i - 1; j++) {
+            if (edges[j][2] > edges[j + 1][2]) {
+                int temp0 = edges[j][0];
+                int temp1 = edges[j][1];
+                int temp2 = edges[j][2];
+                edges[j][0] = edges[j + 1][0];
+                edges[j][1] = edges[j + 1][1];
+                edges[j][2] = edges[j + 1][2];
+                edges[j + 1][0] = temp0;
+                edges[j + 1][1] = temp1;
+                edges[j + 1][2] = temp2;
+            }
+        }
+    }
+
+    printf("Edges in the Minimum Spanning Tree:\n");
+    for (i = 0; i < e; i++) {
+        u = edges[i][0];
+        v = edges[i][1];
+
+        if (find(u) != find(v)) {
+            unionSet(u, v);
+            printf("Edge: (%d - %d) cost = %d\n", u, v, edges[i][2]);
+            cost += edges[i][2];
+        }
+    }
+
+    printf("Total cost of Minimum Spanning Tree = %d\n", cost);
+
+    return 0;
+}
