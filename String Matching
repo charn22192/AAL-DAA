@@ -1,0 +1,35 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char text[100], pattern[100];
+    int i, j, textLen, patternLen, found = 0;
+
+    printf("Enter the main text: ");
+    gets(text); 
+
+    printf("Enter the pattern to search: ");
+    gets(pattern);
+
+    textLen = strlen(text);
+    patternLen = strlen(pattern);
+
+    for (i = 0; i <= textLen - patternLen; i++) {
+        for (j = 0; j < patternLen; j++) {
+            if (text[i + j] != pattern[j]) {
+                break;
+            }
+        }
+
+        if (j == patternLen) {
+            printf("Pattern found at position %d\n", i);
+            found = 1;
+        }
+    }
+
+    if (!found) {
+        printf("Pattern not found in the text.\n");
+    }
+
+    return 0;
+}
