@@ -56,3 +56,14 @@ int main() {
 
     return 0;
 }
+
+out put:
+
+Enter the number of elements: 5
+Enter 5 elements:
+34 2 10 7 56
+Enter the number of elements: 5
+Enter 5 elements:
+34 2 10 7 56
+Sorted array in ascending order:
+2 7 10 34 56
