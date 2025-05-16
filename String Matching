@@ -33,3 +33,11 @@ int main() {
 
     return 0;
 }
+
+out put:
+
+Enter the main text: this is a simple example text
+Enter the pattern to search: simple
+Enter the main text: this is a simple example text
+Enter the pattern to search: simple
+Pattern found at position 10
